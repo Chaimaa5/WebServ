@@ -1,12 +1,11 @@
 #include "Configuration.hpp"
 #include <vector>
-
+#include <fstream>
 class Server{
 	private:
 		std::vector<Configuration>  server_config;
-		//UNACCESSIBLE CTOR
-		Server();
 	public:
+		Server();
 		~Server();
 		Server(const Server & S);
 		Server &operator=(const Server & S);
@@ -14,5 +13,8 @@ class Server{
 		//Getter
 		std::vector<Configuration> GetServerConfig();
 
+		//METHODS
+		void parser(std::fstream & file);
 
-}
+
+};

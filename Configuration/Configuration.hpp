@@ -37,7 +37,7 @@ class Configuration{
 		//SETTERS;
 		void SetPort(int port);
 		void SetSizeLimit(int size_limit);
-		void SetAutoIndex(bool AutoIndex);
+		void SetAutoIndex(bool autoindex);
 		void SetHost(std::string host);
 		void SetServerName(std::string server_name);
 		void SetErrorPage(std::string error_page);
@@ -47,4 +47,4 @@ class Configuration{
 
 		//METHODS
 
-}
+};

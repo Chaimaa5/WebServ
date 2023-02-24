@@ -13,6 +13,7 @@ Configuration & Configuration::operator=(const Configuration & C){
 	this->location = C.location;
 	this->methods = C.methods;
 	this->root = C.root;
+	return *this;
 }
 Configuration::~Configuration(){
 
@@ -31,7 +32,7 @@ std::string Configuration::GetRoot(){return root;}
 //SETTERS;
 void Configuration::SetPort(int port){this->port = port;}
 void Configuration::SetSizeLimit(int size_limit){this->size_limit = size_limit;}
-void Configuration::SetAutoIndex(bool AutoIndex){this->autoindex = autoindex;}
+void Configuration::SetAutoIndex(bool autoindex){this->autoindex = autoindex;}
 void Configuration::SetHost(std::string host){this->host = host;}
 void Configuration::SetServerName(std::string server_name){this->server_name = server_name;}
 void Configuration::SetErrorPage(std::string error_page){this->error_page = error_page;}
