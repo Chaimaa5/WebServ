@@ -4,15 +4,15 @@ Configuration::Configuration(const Configuration & C){
 	*this = C;
 }
 Configuration & Configuration::operator=(const Configuration & C){
-	this->port = port;
-	this->size_limit = size_limit;
-	this->autoindex = autoindex;
-	this->host = host;
-	this->server_name = server_name;
-	this->error_page = error_page;
-	this->location = location;
-	this->methods = methods;
-	this->root = root;
+	this->port = C.port;
+	this->size_limit = C.size_limit;
+	this->autoindex = C.autoindex;
+	this->host = C.host;
+	this->server_name = C.server_name;
+	this->error_page = C.error_page;
+	this->location = C.location;
+	this->methods = C.methods;
+	this->root = C.root;
 }
 Configuration::~Configuration(){
 
