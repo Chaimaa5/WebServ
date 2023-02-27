@@ -38,3 +38,8 @@ Clean up: After the response is sent, the server closes the client socket and wa
 Add features and security: Once you have a basic web server implementation working, you can start adding additional features such as support for SSL/TLS, virtual hosts, configuration files, and more advanced request parsing and response generation. Additionally, you should implement appropriate security measures to protect your server from attacks, such as input validation, rate limiting, and access controls.
 
 Note that this is a high-level overview of the steps involved in implementing a simple HTTP 1.1 web server in C++ 98. The specific implementation details will depend on the particular socket API, web server library, and programming environment that you choose.
+
+//find server
+//parse server
+//find location
+paarse location

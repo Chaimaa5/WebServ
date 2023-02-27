@@ -8,17 +8,17 @@ Configuration::Configuration(const Configuration & C){
 	*this = C;
 }
 Configuration & Configuration::operator=(const Configuration & C){
-	this->server = C.server;
+	this->servers = C.servers;
 	return *this;
 }
 Configuration::~Configuration(){
 
 }
 
-//GETTERS
-std::vector<Server> Configuration::GetServer(){
-	return server;
-}
+// //GETTERS
+// std::vector<Server> Configuration::GetServer(){
+// 	return server;
+// }
 //METHODS
 void Configuration::read_file(const char *file_name){
 	std::fstream file;
@@ -29,4 +29,9 @@ void Configuration::read_file(const char *file_name){
 			file_lines.append(line + '\n');	}
 	else
 		std::cout << "file is corrupted" << std::endl;
+}
+
+std::vector<Server> Configuration::parser(){
+	
+	return servers;
 }

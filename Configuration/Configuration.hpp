@@ -8,17 +8,19 @@
 class Configuration{
 	private:
 		std::string file_lines;
-		std::vector<Server>  server;
 	public:
+		//PUBLIC ATTRIBUTE
+		std::vector<Server>  servers;
 		//CTORS
 		Configuration();
 		Configuration(const Configuration & C);
 		Configuration & operator=(const Configuration & C);
 		~Configuration();
 
-		//GETTERS
-		std::vector<Server> GetServer();
+		// //GETTERS
+		// std::vector<Server> GetServer();
 
 		//METHODS
 		void read_file(const char *);
+		std::vector<Server> parser();
 };
