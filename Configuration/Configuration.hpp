@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-
+#include <cstring>
 
 class Configuration{
 	private:
@@ -11,6 +11,7 @@ class Configuration{
 	public:
 		//PUBLIC ATTRIBUTE
 		std::vector<Server>  servers;
+		std::vector<Location> locations;
 		//CTORS
 		Configuration();
 		Configuration(const Configuration & C);
@@ -22,5 +23,6 @@ class Configuration{
 
 		//METHODS
 		void read_file(const char *);
-		std::vector<Server> parser();
+		std::vector<Server> parser(const char *file_name);
+		std::vector<Location> ParseLocation();
 };

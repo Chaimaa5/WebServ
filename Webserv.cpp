@@ -5,5 +5,6 @@ int main(int ar, char **av){
 		return 0;
 	Configuration config;
 	config.read_file(av[1]);
-	std::vector<Server> servers = config.parser();
+	std::vector<Server> servers = config.parser(av[1]);
+	std::cout << servers.
 }
