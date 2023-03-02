@@ -97,34 +97,63 @@ std::vector<Server> Configuration::parser(){
 	size_t pv = 0;
 	size_t cr = 0;
 	std::string key;
-	std::string value;
-	pv = file_lines.find_first_not_of("server {");
-	if (pv == std::string::npos)
+	cr = file_lines.find_first_not_of(" \n\t");
+
+	if (cr == std::string::npos)
 		std::cout << "parsing error\n";
 	else {
 		while (cr != std::string::npos)
 		{
-			pv = file_lines.find_first_not_of(" \t\n",  pv);
-			std::cout <<"--" <<key << " -- " << pv <<"--"<< std::endl;
-			while ((file_lines.find_first_not_of("}", cr)) != std::string::npos)
-			{
-				if ((cr = file_lines.find_first_not_of(" \t", pv)) != std::string::npos)
-					key = file_lines.substr(pv, cr);
-					std::cout <<"cr" << file_lines[cr]<<  std::endl;
-				if ((pv = file_lines.find_first_not_of("\n", cr)) != std::string::npos)
-					value = file_lines.substr(cr, pv);
-				file_lines = file_lines.substr(pv, std::string::npos);
-				set_server_key_value(server, key, value);
-				std::cout <<"--" <<key << " -- " << value <<"--"<< std::endl;
-			exit(0);
-			}
+			pv = file_lines.find_first_not_of("\n", cr);
+			cr = file_lines.find_first_not_of(" \n\t", pv);
+			key = file_lines.substr(pv, cr - pv);
+			if (key == "server")
+				server = parse_server(&cr);
 			servers.push_back(server);
 		}
 	} 
 	return servers;
 }
 
-void Configuration::set_server_key_value(Server server, std::string key, std::string value){
+Server Configuration::parse_server(size_t *start)
+{
+	Server server;
+	std::string key;
+	std::string value;
+	size_t key_start;
+	size_t value_end;
+	size_t pv  = file_lines.find_first_not_of("\n", *start);
+
+	if (pv == std::string::npos ||  file_lines[pv] != '{')
+		std::cout << "parse error\n";
+	size_t cr = file_lines.find_first_not_of("\n", pv++);
+	while(cr != std::string::npos){
+		if ((pv  = file_lines.find_first_not_of("\n", cr)) == std::string::npos)
+			std::cout << "parse error\n";
+		key_start = pv;
+		if ((cr = file_lines.find_first_not_of("\n", pv)) == std::string::npos)
+			std::cout << "parse error\n";
+		key = file_lines.substr(pv, cr - pv);
+		if (key == "}")
+		{
+			*start = file_lines.find_first_not_of(pv, cr - pv);
+			break;
+		}
+		else
+		{
+			value_end = file_lines.find_first_not_of(pv, cr - pv);
+			value = file_lines.substr(pv, value_end - pv + key_start + 1);
+			parse_server_key_value(server, key, value);
+		}
+	}
+	return server;
+}
+
+
+std::vector<Location> Configuration::ParseLocation(){
+	return locations;
+}
+void Configuration::parse_server_key_value(Server server, std::string key, std::string value){
 	if (key == "port")
 		server.SetPort(atoi(value.c_str()));
 	if (key == "host")
@@ -137,7 +166,4 @@ void Configuration::set_server_key_value(Server server, std::string key, std::st
 		server.SetErrorPage(value);
 	if (key == "location") 
 		server.SetLocation(ParseLocation());
-}
-std::vector<Location> Configuration::ParseLocation(){
-	return locations;
 }

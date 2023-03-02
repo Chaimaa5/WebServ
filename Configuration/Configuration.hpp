@@ -24,6 +24,8 @@ class Configuration{
 		//METHODS
 		void read_file(const char *);
 		std::vector<Server> parser();
-		void set_server_key_value(Server server, std::string key, std::string value);
+		Server parse_server(size_t *start);
+
+		void parse_server_key_value(Server server, std::string key, std::string value);
 		std::vector<Location> ParseLocation();
 };
