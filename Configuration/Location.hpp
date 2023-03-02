@@ -1,11 +1,12 @@
 #pragma once
 #include <iostream>
+#include <vector>
 class Location{
 	private:
 		std::string path;
 		std::string root;
 		std::string index;
-		std::string methods;
+		std::vector<std::string> methods;
 		bool 		autoindex;
 	public:
 		//CTORS;
@@ -18,12 +19,12 @@ class Location{
 		std::string GetPath();
 		std::string GetRoot();
 		std::string GetIndex();
-		std::string GetMethods();
+		std::vector<std::string> GetMethods();
 		bool 		GetAutoIndex();
 		//SETTERS
 		void SetPath(std::string path);
 		void SetRoot(std::string root);
 		void SetIndex(std::string index);
 		void SetMethods(std::string methods);
-		void SetAutoIndex(bool autoindex);
+		void SetAutoIndex(std::string autoindex);
 };

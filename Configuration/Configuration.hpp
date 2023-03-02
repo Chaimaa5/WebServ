@@ -22,10 +22,9 @@ class Configuration{
 		// std::vector<Server> GetServer();
 
 		//METHODS
-		void read_file(const char *);
-		std::vector<Server> parser();
+		std::vector<Server> parser(const char *file_name);
 		Server parse_server(size_t *start);
 
 		void parse_server_key_value(Server server, std::string key, std::string value);
-		std::vector<Location> ParseLocation();
+		void parse_location_key_value(Location location, std::string key, std::string value);
 };
