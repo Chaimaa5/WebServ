@@ -6,8 +6,8 @@ class Location{
 		std::string path;
 		std::string root;
 		std::string index;
-		std::vector<std::string> methods;
 		bool 		autoindex;
+		std::vector<std::string> methods;
 	public:
 		//CTORS;
 		Location();

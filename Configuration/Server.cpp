@@ -39,5 +39,7 @@ void Server::SetSizeLimit(int size_limit){this->size_limit = size_limit;}
 void Server::SetHost(std::string host){this->host = host;}
 void Server::SetServerName(std::string server_name){this->server_name = server_name;}
 void Server::SetErrorPage(std::string error_page){this->error_page = error_page;}
-void Server::SetLocation(std::vector<Location> location){this->location = location;}
+void Server::SetLocation(std::vector<Location> location){this->location = location;
+	std::cout << location[1].GetPath();
+}
 

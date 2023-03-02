@@ -9,8 +9,8 @@ class Server{
 		std::string 			host;
 		std::string 			server_name;
 		std::string 			error_page;
-		std::vector<Location>	location;
 	public:
+		std::vector<Location>	location;
 		//CTORS
 		Server();
 		~Server();

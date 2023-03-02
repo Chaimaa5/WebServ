@@ -26,9 +26,11 @@ bool 		Location::GetAutoIndex(){return autoindex;}
 
 //SETTERS;
 void Location::SetRoot(std::string root){this->root = root;}
-void Location::SetPath(std::string path){this->path = path;}
+void Location::SetPath(std::string path){
+this->path = path;}
 void Location::SetIndex(std::string index){this->index = index;}
 void Location::SetMethods(std::string methods){
+	std::cout << "methods  "<< methods << std::endl;
 	if (methods.find("GET"))
 		this->methods.push_back("GET");
 	if (methods.find("POST"))
