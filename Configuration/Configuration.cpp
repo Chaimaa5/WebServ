@@ -23,7 +23,6 @@ std::vector<Server>  Configuration::parser(const char *file_name){
 	std::string value;
 	if (file.is_open()){
 		Server server;
-		Location location;
 		while (getline(file, line))
 		{
 			line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
@@ -32,6 +31,7 @@ std::vector<Server>  Configuration::parser(const char *file_name){
 			value = line.substr(sep+1, std::string::npos);
 			if (key == "location")
 			{
+				Location location;
 				location.SetPath(value);
 				while (getline(file, line) && key != "]")
 				{
@@ -50,7 +50,6 @@ std::vector<Server>  Configuration::parser(const char *file_name){
 					// parse_location_key_value(location, key, value);
 				}
 				locations.push_back(location);
-				server.SetLocation(locations);
 			}
 			if (key == "port")
 				server.SetPort(atoi(value.c_str()));
@@ -63,7 +62,11 @@ std::vector<Server>  Configuration::parser(const char *file_name){
 			if (key == "error_page") 
 				server.SetErrorPage(value);
 			else if (!line.find("}"))
+			{
+				server.SetLocation(locations);
 				servers.push_back(server);
+				locations.clear();
+			}
 			// parse_server_key_value(server, key, value);
 		}
 	}
