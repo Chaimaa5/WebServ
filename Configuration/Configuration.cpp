@@ -41,13 +41,12 @@ std::vector<Server>  Configuration::parser(const char *file_name){
 					value = line.substr(sep+1, std::string::npos);
 					if (key == "root")
 						location.SetRoot(value);
-					if (key == "index") 
+					if (key == "default") 
 						location.SetIndex(value);
-					if (key == "methods")
+					if (key == "method")
 						location.SetMethods(value);
 					if (key == "autoindex") 
 						location.SetAutoIndex(value);
-					// parse_location_key_value(location, key, value);
 				}
 				locations.push_back(location);
 			}
@@ -67,7 +66,6 @@ std::vector<Server>  Configuration::parser(const char *file_name){
 				servers.push_back(server);
 				locations.clear();
 			}
-			// parse_server_key_value(server, key, value);
 		}
 	}
 	else

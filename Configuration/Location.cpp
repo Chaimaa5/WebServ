@@ -11,9 +11,11 @@ Location::Location(const Location & L){
 	*this = L;
 }
 Location  & Location::operator=(const Location & L){
+	this->path = L.path;
 	this->autoindex = L.autoindex;
 	this->methods = L.methods;
 	this->root = L.root;
+	this->index = L.index;
 	return *this;
 }
 
@@ -27,15 +29,16 @@ bool 		Location::GetAutoIndex(){return autoindex;}
 //SETTERS;
 void Location::SetRoot(std::string root){this->root = root;}
 void Location::SetPath(std::string path){
-this->path = path;}
+	size_t sep = path.find("[");
+	this->path = path.substr(0, sep);
+}
 void Location::SetIndex(std::string index){this->index = index;}
 void Location::SetMethods(std::string methods){
-	std::cout << "methods  "<< methods << std::endl;
-	if (methods.find("GET"))
+	if (methods.find("GET") != std::string::npos)
 		this->methods.push_back("GET");
-	if (methods.find("POST"))
+	if (methods.find("POST") != std::string::npos)
 		this->methods.push_back("POST");
-	if (methods.find("DELETE"))
+	if (methods.find("DELETE") != std::string::npos)
 		this->methods.push_back("DELETE");
 }
 void Location::SetAutoIndex(std::string autoindex){
