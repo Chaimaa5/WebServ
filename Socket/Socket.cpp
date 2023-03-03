@@ -19,7 +19,7 @@ Socket & Socket::operator=(const Socket & S){
 
 //GETTERS
 size_t	Socket::GetPort(){return port;}
-size_t	Socket::GetHost(){return host;}
+std::string		Socket::GetHost(){return host;}
 int		Socket::GetDomain(){return domain;}
 int		Socket::GetType(){return type;}
 int		Socket::GetAddressLen(){return address_len;}
@@ -28,7 +28,7 @@ struct sockaddr_in Socket::GetAddress(){return address;}
 
 //SETTERS
 void	Socket::SetPort(size_t port){this->port = port;}
-void	Socket::SetHost(size_t host){this->host = host;}
+void	Socket::SetHost(std::string	 host){this->host = host;}
 void	Socket::SetDomain(int domain){this->domain = domain;}
 void	Socket::SetType(int type){this->type = type;}
 void	Socket::SetProtocol(int protocol){this->protocol = protocol;}

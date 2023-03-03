@@ -4,14 +4,15 @@
 #include <netinet/in.h>
 class Socket{
 	private:
-		size_t host;
-		size_t port; 
-		int domain;
-		int type;
-		int address_len;
-		int backlog;
-		int protocol;
 		struct sockaddr_in address;
+		std::string				host;
+		size_t				port; 
+		// int					socket;
+		int 				domain;
+		int 				type;
+		int 				address_len;
+		int 				backlog;
+		int 				protocol;
 
 	public:
 		Socket();
@@ -19,7 +20,7 @@ class Socket{
 		Socket(const Socket &);
 		Socket & operator=(const Socket &);
 		size_t	GetPort();
-		size_t	GetHost();
+		std::string		GetHost();
 		int		GetDomain();
 		int		GetType();
 		int		GetAddressLen();
@@ -27,7 +28,7 @@ class Socket{
 		struct sockaddr_in GetAddress();
 
 		void	SetPort(size_t port);
-		void	SetHost(size_t host);
+		void	SetHost(std::string	 host);
 		void	SetDomain(int domain);
 		void	SetType(int type);
 		void	SetProtocol(int protocol);
