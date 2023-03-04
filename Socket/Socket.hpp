@@ -4,15 +4,20 @@
 #include <netinet/in.h>
 class Socket{
 	private:
-		struct sockaddr_in address;
-		std::string				host;
+		struct sockaddr_in	address;
+		std::string			host;
 		size_t				port; 
-		// int					socket;
+		int					socket;
 		int 				domain;
 		int 				type;
 		int 				address_len;
 		int 				backlog;
 		int 				protocol;
+
+		//FD_SET FOR SELECT
+		fd_set read_fds;
+		fd_set write_fds;
+		fd_set error_fds;
 
 	public:
 		Socket();
