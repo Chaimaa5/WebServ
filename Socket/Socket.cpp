@@ -3,8 +3,13 @@
 //CTORS
 Socket::Socket(){
 	FD_ZERO(&_readfds);
+	memset(&serv_addr, 0, sizeof(serv_addr));
+	backlog = 10;
 }
-Socket::Socket(size_t port, std::string host): host(host), port(port) {}
+Socket::Socket(size_t port, std::string host): host(host), port(port) {
+	memset(&serv_addr, 0, sizeof(serv_addr));
+	backlog = 10;
+}
 Socket::~Socket(){}
 Socket::Socket(const Socket & S){
 	*this = S;
@@ -27,7 +32,7 @@ int					Socket::GetDomain(){return domain;}
 int					Socket::GetType(){return type;}
 int					Socket::GetAddressLen(){return address_len;}
 int					Socket::GetBacklog(){return backlog;}
-struct sockaddr_in	Socket::GetAddress(){return address;}
+struct sockaddr_in	Socket::GetAddress(){return serv_addr;}
 
 //SETTERS
 void	Socket::SetPort(size_t port){this->port = port;}
@@ -61,7 +66,6 @@ void Socket::SockCreate(Server server){
 
 // By calling the bind() function, the socket is associated with a specific IP address and port number. 
 void Socket::SockBind(Server server){
-	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET; 
 	serv_addr.sin_port = htons(server.GetPort());
 	serv_addr.sin_addr.s_addr = inet_addr(server.GetHost().c_str());
