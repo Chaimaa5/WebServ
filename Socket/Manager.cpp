@@ -32,6 +32,8 @@ void Manager::Start(std::vector<Server> servers){
 	}
 }
 
-void Manager::Accepter(){}
+void Manager::Accepter(){
+	
+}
 
 

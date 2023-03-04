@@ -9,7 +9,7 @@
 // #include <>
 class Socket{
 	private:
-		struct sockaddr_in	address;
+		struct sockaddr_in	serv_addr;
 		std::string			host;
 		size_t				port; 
 		int					sockfd;
