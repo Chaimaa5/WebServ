@@ -5,7 +5,8 @@ SRC = Webserv.cpp \
 	Configuration/Server.cpp \
 	Configuration/Configuration.cpp \
 	Configuration/Location.cpp \
-	Socket/Socket.cpp
+	Socket/Socket.cpp \
+	Socket/Manager.cpp
 
 all: $(NAME)
 

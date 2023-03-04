@@ -4,7 +4,7 @@
 #include <vector>
 class Server{
 	private:
-		int 					port;
+		size_t 					port;
 		int 					size_limit;
 		std::string 			host;
 		std::string 			server_name;
@@ -18,7 +18,7 @@ class Server{
 		Server &operator=(const Server & S);
 
 		//Getter
-		int 					GetPort();
+		size_t 					GetPort();
 		int 					GetSizeLimit();
 		std::string 			GetHost();
 		std::string 			GetServerName();
@@ -27,7 +27,7 @@ class Server{
 		
 
 		//SETTERS;
-		void SetPort(int port);
+		void SetPort(size_t port);
 		void SetSizeLimit(int size_limit);
 		void SetHost(std::string host);
 		void SetServerName(std::string server_name);
