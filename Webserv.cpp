@@ -6,6 +6,5 @@ int main(int ar, char **av){
 	Configuration config;
 	std::vector<Server> servers = config.parser(av[1]);
 	Manager M;
-	
 	M.Start(servers);
 }

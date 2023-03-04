@@ -20,7 +20,7 @@ Socket & Socket::operator=(const Socket & S){
 	this->domain = S.domain;
 	this->type = S.type;
 	this->backlog = S.backlog;
-	this->address_len = S.address_len;
+	this->addrlen = S.addrlen;
 	this->serv_addr = S.serv_addr;
 	return (*this);
 }
@@ -30,7 +30,7 @@ size_t				Socket::GetPort(){return port;}
 std::string			Socket::GetHost(){return host;}
 int					Socket::GetDomain(){return domain;}
 int					Socket::GetType(){return type;}
-int					Socket::GetAddressLen(){return address_len;}
+int					Socket::GetAddressLen(){return addrlen;}
 int					Socket::GetBacklog(){return backlog;}
 struct sockaddr_in	Socket::GetAddress(){return serv_addr;}
 
@@ -41,7 +41,7 @@ void	Socket::SetDomain(int domain){this->domain = domain;}
 void	Socket::SetType(int type){this->type = type;}
 void	Socket::SetProtocol(int protocol){this->protocol = protocol;}
 void	Socket::SetBacklog(int backlog){this->backlog = backlog;}
-void	Socket::SetAddressLen(int address_len){this->address_len = address_len;}
+void	Socket::SetAddressLen(int addrlen){this->addrlen = addrlen;}
 void	Socket::SetAddress(struct sockaddr_in serv_addr){this->serv_addr = serv_addr;}
 
 void Socket::SockCreate(Server server){
@@ -63,6 +63,7 @@ void Socket::SockCreate(Server server){
 	// This is typically done so that the program can wait for 
 	// incoming data or connections on the socket using a function like select() or poll().
 	FD_SET(sockfd, &_readfds) ;
+	// (void)server;
 	SockBind(server);
 }
 
@@ -75,7 +76,6 @@ void Socket::SockBind(Server server){
 	serv_addr.sin_family = AF_INET; 
 	serv_addr.sin_port = htons(server.GetPort());
 	serv_addr.sin_addr.s_addr = inet_addr(server.GetHost().c_str());
-	std::cout << serv_addr.sin_port << std::endl;
 	if (bind(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
 		perror("bind");
 	SockListen();
@@ -85,19 +85,51 @@ void Socket::SockBind(Server server){
 void Socket::SockListen(){
 	if (listen(sockfd, backlog) < 0)
 		std::cout << "Failed to listen to socket";
+	std::cout << "socket is listening\n";
+	// struct timeval tv;
 
-	struct timeval tv;
+	// tv.tv_sec = 5;
+	// tv.tv_usec = 0;
 
-	tv.tv_sec = 5;
-	tv.tv_usec = 0;
-
-	int res = select(sockfd, &_readfds, NULL, NULL, &tv);
-	if (res == -1)
-		perror("select");
-	else if (res == 0)
-		std::cout << "timeou\n";
-	else {
-		if (FD_ISSET(sockfd, &_readfds))
-			std::cout << "socket is listening\n";
-	}
+	// int res = select(sockfd + 1, &_readfds, NULL, NULL, &tv);
+	// std::cout << res;
+	// if (res == -1)
+	// 	perror("select");
+	// else if (res == 0)
+	// 	std::cout << "timeout\n";
+	// else {
+	// 	if (FD_ISSET(sockfd, &_readfds))
+	// 		std::cout << "socket is listening\n";
+	// }
+	int fd;
+	long valread;
+	// std::string hello = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello a lqhab!";
+	while(1)
+    {
+        printf("\n+++++++ Waiting for new connection ++++++++\n\n");
+        if ((fd = accept(sockfd, (struct sockaddr *)&serv_addr, (socklen_t*)&addrlen))<0)
+        {
+            perror("In accept");
+            exit(EXIT_FAILURE);
+        }
+        
+        char buffer[300000] = {0};
+        valread = read( fd , buffer, 300000);
+        printf("%s\n",buffer );
+        write(fd , "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello a lqhab!" , strlen("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello a lqhab!"));
+        close(fd);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

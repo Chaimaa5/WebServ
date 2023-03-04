@@ -5,6 +5,7 @@
 #include <sys/select.h>
 #include <fcntl.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 #include "../Configuration/Server.hpp"
 // #include <>
 class Socket{
@@ -15,7 +16,7 @@ class Socket{
 		int					sockfd;
 		int 				domain;
 		int 				type;
-		int 				address_len;
+		int 				addrlen;
 		int 				backlog;
 		int 				protocol;
 
