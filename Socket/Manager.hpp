@@ -19,5 +19,5 @@ class Manager{
 
 		//METHODS
 		void Start(std::vector<Server> servers);
-		void Accepter();
+		// void Accepter();
 };
