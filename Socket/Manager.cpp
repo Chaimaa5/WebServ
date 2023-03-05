@@ -47,6 +47,7 @@ void Manager::Accepter(){
 	while(1)
     {
 		int sockfd = fd[fd.size() - 1];
+		std::cout << sockfd << "  "<< fd.size() - 1 <<  std::endl;
 		if ((res = select( sockfd + 1, &_readfds, NULL, NULL, 0)) < 0)
 			std::cout << "select failed\n";
 		std::cout << res;
