@@ -2,12 +2,10 @@
 
 //CTORS
 Socket::Socket(){
-	FD_ZERO(&_readfds);
 	backlog = 10;
 }
 Socket::Socket(size_t port, std::string host): host(host), port(port) {
 	// memset(&serv_addr, 0, sizeof(serv_addr));
-	FD_ZERO(&_readfds);
 	backlog = 10;
 }
 Socket::~Socket(){}
@@ -33,6 +31,7 @@ int					Socket::GetType(){return type;}
 int					Socket::GetAddressLen(){return addrlen;}
 int					Socket::GetBacklog(){return backlog;}
 struct sockaddr_in	Socket::GetAddress(){return serv_addr;}
+int					Socket::GetSockFd(){return sockfd;}
 
 //SETTERS
 void	Socket::SetPort(size_t port){this->port = port;}
@@ -43,8 +42,8 @@ void	Socket::SetProtocol(int protocol){this->protocol = protocol;}
 void	Socket::SetBacklog(int backlog){this->backlog = backlog;}
 void	Socket::SetAddressLen(int addrlen){this->addrlen = addrlen;}
 void	Socket::SetAddress(struct sockaddr_in serv_addr){this->serv_addr = serv_addr;}
-
-void Socket::SockCreate(Server server){
+void	Socket::SetSockFd(int sockfd){this->sockfd = sockfd;}
+void 	Socket::SockCreate(Server server){
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 1)
 		std::cout <<"Failed to creat socket\n";
@@ -62,7 +61,6 @@ void Socket::SockCreate(Server server){
 	// to a set of file descriptors to monitor for I/O readiness. 
 	// This is typically done so that the program can wait for 
 	// incoming data or connections on the socket using a function like select() or poll().
-	FD_SET(sockfd, &_readfds) ;
 	// (void)server;
 	SockBind(server);
 }
@@ -86,39 +84,6 @@ void Socket::SockListen(){
 	if (listen(sockfd, backlog) < 0)
 		std::cout << "Failed to listen to socket";
 	std::cout << "socket is listening\n";
-	// struct timeval tv;
-
-	// tv.tv_sec = 5;
-	// tv.tv_usec = 0;
-
-	// int res = select(sockfd + 1, &_readfds, NULL, NULL, &tv);
-	// std::cout << res;
-	// if (res == -1)
-	// 	perror("select");
-	// else if (res == 0)
-	// 	std::cout << "timeout\n";
-	// else {
-	// 	if (FD_ISSET(sockfd, &_readfds))
-	// 		std::cout << "socket is listening\n";
-	// }
-	int fd;
-	long valread;
-	// std::string hello = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello a lqhab!";
-	while(1)
-    {
-        printf("\n+++++++ Waiting for new connection ++++++++\n\n");
-        if ((fd = accept(sockfd, (struct sockaddr *)&serv_addr, (socklen_t*)&addrlen))<0)
-        {
-            perror("In accept");
-            exit(EXIT_FAILURE);
-        }
-        
-        char buffer[300000] = {0};
-        valread = read( fd , buffer, 300000);
-        printf("%s\n",buffer );
-        write(fd , "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello a lqhab!" , strlen("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello a lqhab!"));
-        close(fd);
-    }
 }
 
 

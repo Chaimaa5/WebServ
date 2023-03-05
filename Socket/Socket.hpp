@@ -10,22 +10,17 @@
 // #include <>
 class Socket{
 	private:
-		struct sockaddr_in	serv_addr;
 		std::string			host;
 		size_t				port; 
-		int					sockfd;
 		int 				domain;
 		int 				type;
-		int 				addrlen;
 		int 				backlog;
 		int 				protocol;
 
-		//FD_SET FOR SELECT
-		fd_set _readfds;
-		// fd_set _writefds;
-		// fd_set _errorfds;
-
 	public:
+		struct sockaddr_in	serv_addr;
+		int 				addrlen;
+		int					sockfd;
 		Socket();
 		Socket(size_t port, std::string host);
 		~Socket();
@@ -39,6 +34,7 @@ class Socket{
 		int					GetType();
 		int					GetAddressLen();
 		int					GetBacklog();
+		int					GetSockFd();
 		struct sockaddr_in	GetAddress();
 
 		//SETTERS
@@ -50,6 +46,7 @@ class Socket{
 		void	SetBacklog(int backlog);
 		void	SetAddressLen(int address_len);
 		void	SetAddress(struct sockaddr_in address);
+		void	SetSockFd(int sockfd);
 
 		//METHODS
 		void SockCreate(Server server);

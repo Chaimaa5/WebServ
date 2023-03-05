@@ -3,7 +3,11 @@
 class Manager{
 	private:
 		std::vector<Socket> socket;
-
+		std::vector<int>	fd;
+		//FD_SET FOR SELECT
+		fd_set _readfds;
+		fd_set _writefds;
+		fd_set _errorfds;
 	public:
 		//CTORS
 		Manager();
@@ -19,5 +23,5 @@ class Manager{
 
 		//METHODS
 		void Start(std::vector<Server> servers);
-		// void Accepter();
+		void Accepter();
 };
