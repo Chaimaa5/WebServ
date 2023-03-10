@@ -43,14 +43,14 @@ void	Socket::SetBacklog(int backlog){this->backlog = backlog;}
 void	Socket::SetAddressLen(int addrlen){this->addrlen = addrlen;}
 void	Socket::SetAddress(struct sockaddr_in serv_addr){this->serv_addr = serv_addr;}
 void	Socket::SetSockFd(int sockfd){this->sockfd = sockfd;}
+
 void 	Socket::SockCreate(Server server){
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 1)
 		std::cout <<"Failed to creat socket\n";
-
 	//set the created socket to non-blocking mode  
-	// int flags = fcntl(sockfd, F_GETFL, 0);
-	// fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+	int flags = fcntl(sockfd, F_GETFL, 0);
+	fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
 
 	//  we set optval to 1 for some socket options to enable them
 	int optval = 1;
@@ -69,6 +69,7 @@ void 	Socket::SockCreate(Server server){
 // If you're binding to a privileged port (i.e., a port number less than or equal to 1024)
 // you will need root privileges to bind to that port. You can either run the program as root, 
 // or use a port number greater than 1024.
+
 void Socket::SockBind(Server server){
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET; 

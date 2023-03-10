@@ -42,12 +42,13 @@ void Manager::Start(std::vector<Server> servers){
 void Manager::Accepter(){
 
 	int new_socket;
-	long valread;
 	int res;
 	while(1)
     {
 		int sockfd = fd[fd.size() - 1];
+		
 		_tmpreadfds = _readfds;
+		_tmpwritefds = _writefds;
 		if ((res = select(sockfd + 1, &_tmpreadfds, NULL, NULL, 0)) < 0)
 			std::cout << "select failed\n";
 		if (FD_ISSET(sockfd, &_tmpreadfds)){
@@ -60,12 +61,16 @@ void Manager::Accepter(){
 					perror("In accept");
 					exit(EXIT_FAILURE);
 				}
+				FD_SET(new_socket, &_tmpwritefds);
+				FD_CLR(sockfd, &_tmpreadfds);
 				char buffer[300000] = {0};
-				valread = read( new_socket , buffer, 300000);
+				recv( new_socket , buffer, 300000, MSG_DONTWAIT);
 				printf("%s\n",buffer );
 				close(new_socket);
 			}
 		}
+		if (FD_ISSET(new_socket, &_tmpwritefds))
+			write(new_socket, "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello!", 68);
     }
 }
 

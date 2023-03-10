@@ -16,11 +16,10 @@ class Socket{
 		int 				type;
 		int 				backlog;
 		int 				protocol;
-
+		int					sockfd;
 	public:
 		struct sockaddr_in	serv_addr;
 		int 				addrlen;
-		int					sockfd;
 		Socket();
 		Socket(size_t port, std::string host);
 		~Socket();

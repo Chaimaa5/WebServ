@@ -8,7 +8,7 @@ class Manager{
 		fd_set _readfds;
 		fd_set _writefds;
 		fd_set _tmpreadfds;
-		// fd_set _tmpwritefds;
+		fd_set _tmpwritefds;
 		fd_set _errorfds;
 	public:
 		//CTORS
