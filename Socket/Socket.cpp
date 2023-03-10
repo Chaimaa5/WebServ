@@ -75,7 +75,10 @@ void Socket::SockBind(Server server){
 	serv_addr.sin_port = htons(server.GetPort());
 	serv_addr.sin_addr.s_addr = inet_addr(server.GetHost().c_str());
 	if (bind(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
+	{
 		perror("bind");
+		std::cout << errno  << " "<<  server.GetHost() <<std::endl;
+	}
 	SockListen();
 }
 

@@ -47,33 +47,24 @@ void Manager::Accepter(){
 	while(1)
     {
 		int sockfd = fd[fd.size() - 1];
-		std::cout << sockfd << "  "<< fd.size() - 1 <<  std::endl;
-		if ((res = select( sockfd + 1, &_readfds, NULL, NULL, 0)) < 0)
+		_tmpreadfds = _readfds;
+		if ((res = select(sockfd + 1, &_tmpreadfds, NULL, NULL, 0)) < 0)
 			std::cout << "select failed\n";
-		std::cout << res;
-		if (res == -1)
-			perror("select");
-		else if (res == 0)
-			std::cout << "timeout\n";
-		else {
-			if (FD_ISSET(*fd.end(), &_readfds))
-				std::cout << "socket is listening\n";
-		}
-        printf("\n+++++++ Waiting for new connection ++++++++\n\n");
-		for (size_t i = 0; i < socket.size(); i++)
-		{
-			sockfd = socket[i].sockfd;
-			if ((new_socket = accept(socket[i].sockfd, (struct sockaddr *)&socket[i].serv_addr, (socklen_t*)&socket[i].addrlen))<0)
+		if (FD_ISSET(sockfd, &_tmpreadfds)){
+        	printf("\n+++++++ Waiting for new connection ++++++++\n\n");
+			for (size_t i = 0; i < socket.size(); i++)
 			{
-				perror("In accept");
-				exit(EXIT_FAILURE);
+				if ((new_socket = accept(sockfd, (struct sockaddr *)&socket[i].serv_addr, (socklen_t*)&socket[i].addrlen))<0)
+				{
+					std::cout << sockfd << std::endl;
+					perror("In accept");
+					exit(EXIT_FAILURE);
+				}
+				char buffer[300000] = {0};
+				valread = read( new_socket , buffer, 300000);
+				printf("%s\n",buffer );
+				close(new_socket);
 			}
-			
-			char buffer[300000] = {0};
-			valread = read( new_socket , buffer, 300000);
-			printf("%s\n",buffer );
-			// write(fd , "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello a lqhab!" , strlen("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 20\n\nHello a lqhab!"));
-			close(new_socket);
 		}
     }
 }
